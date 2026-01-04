@@ -1,0 +1,183 @@
+{
+  "journeys": [
+    {
+      "id": "login-standard",
+      "name": "User logs in with valid credentials",
+      "description": "User navigates to the login page and submits correct login details.",
+      "priority": "high",
+      "paths": {
+        "happy": [
+          {
+            "action": "goto",
+            "url": "/login",
+            "selector": "",
+            "value": "",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Navigate to login page"
+          },
+          {
+            "action": "fill",
+            "selector": "input[formControlName='usernameOrEmail']",
+            "value": "{{valid.usernameOrEmail}}",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Fill in username or email",
+            "validationRules": {
+              "required": true
+            }
+          },
+          {
+            "action": "fill",
+            "selector": "input[formControlName='password']",
+            "value": "{{valid.password}}",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Fill in password",
+            "validationRules": {
+              "required": true,
+              "minLength": 6
+            }
+          },
+          {
+            "action": "click",
+            "selector": "button[type='submit']",
+            "value": "",
+            "assert": "",
+            "waitFor": {
+              "type": "response",
+              "match": "POST /api/login"
+            },
+            "notes": "Submit login form"
+          },
+          {
+            "action": "waitForNavigation",
+            "selector": "",
+            "value": "",
+            "assert": "url",
+            "waitFor": {
+              "type": "navigation",
+              "match": "/dashboard"
+            },
+            "notes": "Expect redirect to dashboard on success"
+          }
+        ],
+        "error": [
+          {
+            "action": "goto",
+            "url": "/login",
+            "selector": "",
+            "value": "",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Navigate to login page"
+          },
+          {
+            "action": "fill",
+            "selector": "input[formControlName='usernameOrEmail']",
+            "value": "{{invalid.usernameOrEmail}}",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Fill invalid username or email",
+            "validationRules": {
+              "required": true
+            }
+          },
+          {
+            "action": "fill",
+            "selector": "input[formControlName='password']",
+            "value": "{{invalid.password}}",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Fill invalid password",
+            "validationRules": {
+              "required": true,
+              "minLength": 6
+            }
+          },
+          {
+            "action": "click",
+            "selector": "button[type='submit']",
+            "value": "",
+            "assert": "",
+            "waitFor": {
+              "type": "response",
+              "match": "POST /api/login"
+            },
+            "notes": "Submit login form"
+          },
+          {
+            "action": "expect",
+            "selector": ".mat-mdc-snack-bar-container",
+            "value": "",
+            "assert": "visible",
+            "waitFor": {
+              "type": "selector",
+              "match": ".mat-mdc-snack-bar-container"
+            },
+            "notes": "Error Snackbar appears"
+          }
+        ],
+        "alt": [
+          {
+            "action": "goto",
+            "url": "/login",
+            "selector": "",
+            "value": "",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Navigate to login page"
+          },
+          {
+            "action": "fill",
+            "selector": "input[formControlName='usernameOrEmail']",
+            "value": "{{valid.usernameOrEmail}}",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Only fill username or email",
+            "validationRules": {
+              "required": true
+            }
+          },
+          {
+            "action": "fill",
+            "selector": "input[formControlName='password']",
+            "value": "",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Leave password empty",
+            "validationRules": {
+              "required": true,
+              "minLength": 6
+            }
+          },
+          {
+            "action": "click",
+            "selector": "button[type='submit']",
+            "value": "",
+            "assert": "",
+            "waitFor": null,
+            "notes": "Attempt submit"
+          },
+          {
+            "action": "expect",
+            "selector": "mat-error",
+            "value": "",
+            "assert": "visible",
+            "waitFor": {
+              "type": "selector",
+              "match": "mat-error"
+            },
+            "notes": "Show required error message for password"
+          }
+        ]
+      },
+      "testDataKeys": [
+        "usernameOrEmail",
+        "password"
+      ],
+      "fixtures": [],
+      "confidence": "high"
+    }
+  ]
+}
